@@ -1,10 +1,5 @@
 <?php
-/*
- * @Author: cxx<cxx2320@foxmail.com>
- * @Date: 2020-07-28 13:18:33
- * @LastEditors: cxx
- * @LastEditTime: 2020-07-28 13:22:13
- */
+
 $host = '0.0.0.0';
 $port = 9999;
 $fd = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);

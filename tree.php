@@ -1,10 +1,5 @@
 <?php
-/*
- * @Author: cxx<cxx2320@foxmail.com>
- * @Date: 2020-01-07 19:47:30
- * @LastEditors  : cxx
- * @LastEditTime : 2020-01-07 20:03:01
- */
+
 
 function tree($data = [])
 {

@@ -1,10 +1,5 @@
 <?php
-/*
- * @Author: cxx<cxx2320@foxmail.com>
- * @Date: 2020-07-30 15:05:49
- * @LastEditors: cxx
- * @LastEditTime: 2020-07-30 15:41:29
- */
+
 
 $list = [1, 3, 2, 6, 0, 6, 5];
 
