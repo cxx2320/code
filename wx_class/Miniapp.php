@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use think\Request;
 
 class Miniapp
@@ -10,17 +19,17 @@ class Miniapp
     const AUTH_CODE2SESSION = 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code';
 
     /**
-     * 获取access_tokenuri
+     * 获取access_tokenuri.
      */
     const ACCESS_TOKEN_URI = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s';
 
     /**
-     * 获取数量较多的小程序码uri 适用于需要的码数量极多的业务场景
+     * 获取数量较多的小程序码uri 适用于需要的码数量极多的业务场景.
      */
     const UNLIMIT_URI = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=%s';
 
     /**
-     * 获取SessionKey
+     * 获取SessionKey.
      * @param string $code 微信小程序code
      * @return array
      * @throws Exception
@@ -30,35 +39,37 @@ class Miniapp
         if (empty($code)) {
             throw new \Exception('code不合法');
         }
-        $result = \fast\Http::get(sprintf(self::AUTH_CODE2SESSION, config('site.miniapp_id'), config('site.app_secret'), $code));
+        $result         = \fast\Http::get(sprintf(self::AUTH_CODE2SESSION, config('site.miniapp_id'), config('site.app_secret'), $code));
         $jscode2session = json_decode($result, true);
 
-        if (isset($jscode2session['errcode']) && $jscode2session['errcode'] != 0) {
+        if (isset($jscode2session['errcode']) && 0 != $jscode2session['errcode']) {
             throw new \Exception('服务器错误，请重试！');
             // throw new \Exception($jscode2session['errcode'].' : '.$jscode2session['errmsg']);
         }
+
         return $jscode2session;
     }
 
     /**
-     * 获取access_token
+     * 获取access_token.
      */
     public static function getAccessToken()
     {
         $access_token = \think\Cache::get('access_token');
         if (!$access_token) {
-            $appid = config('site.miniapp_id');
-            $secret = config('site.app_secret');
-            $token = json_decode(\fast\Http::get(sprintf(self::ACCESS_TOKEN_URI, $appid, $secret)), true);
+            $appid        = config('site.miniapp_id');
+            $secret       = config('site.app_secret');
+            $token        = json_decode(\fast\Http::get(sprintf(self::ACCESS_TOKEN_URI, $appid, $secret)), true);
             $access_token = $token['access_token'];
             \think\Cache::set('access_token', $access_token, 7100);
         }
+
         return $access_token;
     }
 
     /**
      * 获取小程序码
-     * @link https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
      * @param array $data 微信生成小程序码需要的参数
      * @return array|boole
      */
@@ -68,12 +79,13 @@ class Miniapp
             return false;
         }
         $token = self::getAccessToken();
-        $data = \fast\Http::post(sprintf(self::UNLIMIT_URI, $token), json_encode($data));
+        $data  = \fast\Http::post(sprintf(self::UNLIMIT_URI, $token), json_encode($data));
+
         return json_decode($data, true);
     }
 
     /**
-     * 获取用户信息
+     * 获取用户信息.
      * @throws \Exception
      */
     public static function getUserInfo($code = '', $encryptedData = '', $iv = '')
@@ -82,20 +94,21 @@ class Miniapp
             throw new \Exception('参数错误');
         }
         $jscode2session = self::getSessionKey($code);
-        $encryptedData =  $encryptedData ?: Request::instance()->request('data');
-        $iv = $iv ?: Request::instance()->request('iv');
-        $pc = new WXBizDataCrypt(config('site.miniapp_id'), $jscode2session['session_key']);
-        $data = null;
-        $errCode = $pc->decryptData($encryptedData, $iv, $data);
-        if ($errCode != 0) {
+        $encryptedData  =  $encryptedData ?: Request::instance()->request('data');
+        $iv             = $iv ?: Request::instance()->request('iv');
+        $pc             = new WXBizDataCrypt(config('site.miniapp_id'), $jscode2session['session_key']);
+        $data           = null;
+        $errCode        = $pc->decryptData($encryptedData, $iv, $data);
+        if (0 != $errCode) {
             throw new \Exception($errCode);
         }
+
         return json_decode($data, true);
     }
 
     /**
      * 获取小程序码
-     * @link https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
      * @param array $data 微信生成小程序码需要的参数
      * @return array|boole
      */
@@ -105,7 +118,8 @@ class Miniapp
             return false;
         }
         $token = self::getAccessToken();
-        $data = \fast\Http::post(sprintf(self::UNLIMIT_URI, $token), json_encode($data));
+        $data  = \fast\Http::post(sprintf(self::UNLIMIT_URI, $token), json_encode($data));
+
         return json_decode($data, true);
     }
 }

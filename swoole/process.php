@@ -1,8 +1,17 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use Swoole\Process;
 
-for ($n = 1; $n <= 3; $n++) {
+for ($n = 1; $n <= 3; ++$n) {
     $process = new Process(function () use ($n) {
         echo 'Child #' . getmypid() . " start and sleep {$n}s" . PHP_EOL;
         sleep($n);

@@ -1,7 +1,16 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
- * 使用ArrayAccess可以使把对象以数组的方式访问
+ * 使用ArrayAccess可以使把对象以数组的方式访问.
  */
 class TestArray implements \ArrayAccess
 {
@@ -13,7 +22,7 @@ class TestArray implements \ArrayAccess
     }
 
     /**
-     * 检查一个偏移位置是否存在
+     * 检查一个偏移位置是否存在.
      * @param mixed $offset
      */
     public function offsetExists($offset)
@@ -48,12 +57,12 @@ class TestArray implements \ArrayAccess
 
 $obj_array = new TestArray([
     'name' => 'cxx',
-    'age' => 18,
-    'bio' => 'a super hero'
+    'age'  => 18,
+    'bio'  => 'a super hero',
 ]);
 
 var_dump($obj_array['name']);
-$obj_array['name'] = "Cxx";
+$obj_array['name'] = 'Cxx';
 var_dump($obj_array['name']);
 
 unset($obj_array['name']);

@@ -1,10 +1,14 @@
 <?php
+
 /*
- * @Author: cxx<cxx2320@foxmail.com>
- * @Date: 2020-08-06 16:02:16
- * @LastEditors: cxx
- * @LastEditTime: 2020-08-06 16:04:54
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
+
 class A
 {
     private $x = 1;
@@ -15,7 +19,7 @@ $getXCB = function () {
     return $this->x;
 };
 
-$getX = $getXCB->bindTo(new A, 'A'); // 中间层闭包
+$getX = $getXCB->bindTo(new A(), 'A'); // 中间层闭包
 
 // // PHP 7+
 // $getX = function() {

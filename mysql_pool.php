@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use Swoole\Coroutine\Channel;
 use Swoole\Coroutine\MySQL;
 
@@ -18,9 +27,9 @@ class MysqlPool
      */
     public function __construct()
     {
-        $this->min = 10;
-        $this->max = 100;
-        $this->freeTime = 10 * 3600;
+        $this->min         = 10;
+        $this->max         = 100;
+        $this->freeTime    = 10 * 3600;
         $this->connections = new Channel($this->max + 1);
     }
 
@@ -37,23 +46,24 @@ class MysqlPool
     }
 
     /**
-     * 创建连接
+     * 创建连接.
      * @return MySQL
      */
     protected function createConnection()
     {
         $conn = new MySQL();
         $conn->connect([
-            'host' => '127.0.0.1',
-            'port' => '3306',
-            'user' => 'root',
+            'host'     => '127.0.0.1',
+            'port'     => '3306',
+            'user'     => 'root',
             'password' => '123456',
             'database' => 'fastadmin',
-            'timeout'  => 5
+            'timeout'  => 5,
         ]);
         if (!$conn->connected) {
             throw new \Exception('连接失败');
         }
+
         return $conn;
     }
 
@@ -64,18 +74,19 @@ class MysqlPool
     protected function createConnObject()
     {
         $conn = $this->createConnection();
+
         return $conn ? ['last_used_time' => time(), 'conn' => $conn] : null;
     }
 
     /**
-     * 初始化连接
+     * 初始化连接.
      * @return $this
      */
     public function init()
     {
-        for ($i = 0; $i < $this->min; $i++) {
+        for ($i = 0; $i < $this->min; ++$i) {
             $obj = $this->createConnObject();
-            $this->count++;
+            ++$this->count;
             $this->connections->push($obj);
         }
 
@@ -83,7 +94,7 @@ class MysqlPool
     }
 
     /**
-     * 获取连接
+     * 获取连接.
      * @param int $timeout
      * @return mixed
      */
@@ -91,7 +102,7 @@ class MysqlPool
     {
         if ($this->connections->isEmpty()) {
             if ($this->count < $this->max) {
-                $this->count++;
+                ++$this->count;
                 $obj = $this->createConnObject();
             } else {
                 $obj = $this->connections->pop($timeout);
@@ -99,11 +110,12 @@ class MysqlPool
         } else {
             $obj = $this->connections->pop($timeout);
         }
+
         return $obj['conn']->connected ? $obj['conn'] : $this->getConn();
     }
 
     /**
-     * 回收连接
+     * 回收连接.
      * @param $conn
      */
     public function recycle($conn)
@@ -114,7 +126,7 @@ class MysqlPool
     }
 
     /**
-     * 回收空闲连接
+     * 回收空闲连接.
      */
     public function recycleFreeConnection()
     {
@@ -137,7 +149,7 @@ class MysqlPool
                 // 当前连接数大于最小的连接数，并且回收掉空闲的连接
                 if ($this->count > $this->min && ($nowTime - $lastUsedTime > $this->freeTime)) {
                     $connObj['conn']->close();
-                    $this->count--;
+                    --$this->count;
                 } else {
                     $this->connections->push($connObj);
                 }
@@ -160,14 +172,13 @@ $httpServer->on('Request', function ($request, $response) {
     var_dump([
         $mysql_poll->connections->length(),
         $mysql_poll->count,
-        $mysql_poll->connections->pop()
+        $mysql_poll->connections->pop(),
     ]);
-
 
     // MysqlPool::getInstance()->getConn();
     // Swoole\Timer::tick(1000, function () {
     //     MysqlPool::getInstance()->getConn();
     // });
-    $response->end("ok");
+    $response->end('ok');
 });
 $httpServer->start();

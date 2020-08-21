@@ -1,8 +1,17 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 $host = '0.0.0.0';
 $port = 9999;
-$fd = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+$fd   = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_bind($fd, $host, $port);
 socket_listen($fd);
 // 注意，将“监听socket”设置为非阻塞模式
@@ -10,17 +19,17 @@ socket_set_nonblock($fd);
 
 // 这里值得注意，我们声明两个数组用来保存 事件 和 连接socket
 $event_arr = [];
-$conn_arr = [];
+$conn_arr  = [];
 
-echo PHP_EOL . PHP_EOL . "欢迎来到ti-chat聊天室!发言注意遵守当地法律法规!" . PHP_EOL;
+echo PHP_EOL . PHP_EOL . '欢迎来到ti-chat聊天室!发言注意遵守当地法律法规!' . PHP_EOL;
 echo "        tcp://{$host}:{$port}" . PHP_EOL;
 
 $event_base = new EventBase();
-$event = new \Event($event_base, $fd, \Event::READ | \Event::PERSIST, function ($fd) {
+$event      = new \Event($event_base, $fd, \Event::READ | \Event::PERSIST, function ($fd) {
     // 使用全局的event_arr 和 conn_arr
     global $event_arr, $conn_arr, $event_base;
     // 非阻塞模式下，注意accpet的写法会稍微特殊一些。如果不想这么写，请往前面添加@符号，不过不建议这种写法
-    if (($conn = socket_accept($fd)) != false) {
+    if (false != ($conn = socket_accept($fd))) {
         echo date('Y-m-d H:i:s') . '：欢迎' . intval($conn) . '来到聊天室' . PHP_EOL;
         // 将连接socket也设置为非阻塞模式
         socket_set_nonblock($conn);

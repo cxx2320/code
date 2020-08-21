@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 class RedisClient
 {
     //创建静态私有的变量保存该类对象
@@ -16,24 +25,26 @@ class RedisClient
     }
 
     /**
-     * 获取redis单例
+     * 获取redis单例.
      */
     public static function getInstance()
     {
         if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
-    
     public function __call($name, $params)
     {
         if (empty($name)) {
             return false;
         }
+
         return self::$redis->$name(...$params);
     }
+
     //防止克隆对象
     private function __clone()
     {

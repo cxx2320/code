@@ -1,25 +1,34 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use Swoole\Table;
 
 $table_config = [
     'u2fd' => [
-        'size' => 10240,
+        'size'    => 10240,
         'columns' => [
-            ['name' => 'fd', 'type' => Table::TYPE_INT, 'size' => 8]
-        ]
+            ['name' => 'fd', 'type' => Table::TYPE_INT, 'size' => 8],
+        ],
     ],
     'fd2u' => [
-        'size' => 10240,
+        'size'    => 10240,
         'columns' => [
-            ['name' => 'uid', 'type' => Table::TYPE_INT, 'size' => 8]
-        ]
+            ['name' => 'uid', 'type' => Table::TYPE_INT, 'size' => 8],
+        ],
     ],
     'vote' => [
-        'size' => 256,
+        'size'    => 256,
         'columns' => [
             ['name' => 'poll', 'type' => Table::TYPE_INT, 'size' => 8], //票数
-        ]
+        ],
     ],
 ];
 

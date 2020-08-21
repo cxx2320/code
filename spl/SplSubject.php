@@ -1,12 +1,22 @@
 <?php
 
+/*
+ * This file is part of the mingzaily/lumen-permission.
+ *
+ * (c) mingzaily <mingzaily@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 class OrderPayEvent implements \SplSubject
 {
     private $observers;
     public $order;
+
     public function __construct(Order $order)
     {
-        $this->order = $order;
+        $this->order     = $order;
         $this->observers = new \SplObjectStorage();
     }
 
@@ -33,7 +43,7 @@ class UpdateOrderStatus implements \SplObserver
     public function update(SplSubject $subject)
     {
         $subject->order->status = 'success';
-        echo "订单状态更改成功" . PHP_EOL;
+        echo '订单状态更改成功' . PHP_EOL;
     }
 }
 
@@ -41,13 +51,13 @@ class SmsNotify implements \SplObserver
 {
     public function update(SplSubject $subject)
     {
-        echo "发送短信:" . $subject->order->user_id . '购买了商品' . PHP_EOL;
+        echo '发送短信:' . $subject->order->user_id . '购买了商品' . PHP_EOL;
     }
 }
 
 class Order
 {
-    public $status = 'fail';
+    public $status  = 'fail';
     public $user_id = '1';
 }
 
