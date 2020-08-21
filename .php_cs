@@ -2,10 +2,11 @@
 
 // 将会在每个php文件头部加上此注释
 $header = <<<EOF
-/**
- * @author cxx <cxx2320@foxmail>
- * @time 2020年8月21日 17点45分
- */
+
+(c) cxx <cxx2320@foxmail>
+This source file is subject to the MIT license that is bundled
+with this source code in the file LICENSE.
+
 EOF;
 
 $finder = PhpCsFixer\Finder::create()
@@ -20,7 +21,7 @@ $finder = PhpCsFixer\Finder::create()
 
 $rules = array(
     '@Symfony'                                   => true, // 开启预设的规则
-    // 'header_comment'                             => array('header' => $header),
+    'header_comment'                             => array('header' => $header),
     'array_syntax'                               => array('syntax' => 'short'),
     'ordered_imports'                            => true, // 按顺序use导入
     'no_useless_else'                            => true, // 删除没有使用的else节点
