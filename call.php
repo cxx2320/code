@@ -5,7 +5,8 @@
  * @LastEditors: cxx
  * @LastEditTime: 2020-08-06 16:04:54
  */
-class A {
+class A
+{
     private $x = 1;
 }
 
@@ -16,7 +17,7 @@ $getXCB = function () {
 
 $getX = $getXCB->bindTo(new A, 'A'); // 中间层闭包
 
-// // PHP 7+ 
+// // PHP 7+
 // $getX = function() {
 //     return $this->x;
 // };

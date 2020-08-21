@@ -2,8 +2,8 @@
 
 namespace fast;
 
-class Wechat {
-
+class Wechat
+{
     const API_SEND_TEMPLATE = 'https://api.weixin.qq.com/cgi-bin/message/template/send';
     const GET_ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/sns/oauth2/access_token';
     const GET_USERINFO_URL = 'https://api.weixin.qq.com/sns/userinfo';
@@ -11,12 +11,13 @@ class Wechat {
     const APP_URL = 'https://dd.daobentech.net'; //项目地址
 
     //获取access_token
-    public static function getAccessToken(){
+    public static function getAccessToken()
+    {
         $appid = config('site.wechat_app_id');
         $secret = config('site.wechat_app_secret');
         $access_token = \think\Cache::get('access_token');
 
-        if(!$access_token){
+        if (!$access_token) {
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}";
             $token = json_decode(\fast\Http::get($url), true);
             $access_token = $token['access_token'];
@@ -25,16 +26,17 @@ class Wechat {
         return $access_token;
     }
 
-    public static function getUserInfo(string $code = ''){
+    public static function getUserInfo(string $code = '')
+    {
         $appid = config('site.wechat_app_id');
         $secret = config('site.wechat_app_secret');
         $access_token = self::getAccessToken();
         $oauth2Url = self::GET_ACCESS_TOKEN_URL . '?appid='.$appid.'&secret='.$secret.'&code='.$code.'&grant_type=authorization_code';
         $oauth2 = json_decode(\fast\Http::get($oauth2Url), true);
         $get_user_info_url = self::GET_USERINFO_URL . '?access_token='.$oauth2['access_token'].'&openid=' . $oauth2['openid'] . '&lang=zh_CN';
-        $userinfo = json_decode(\fast\Http::get($get_user_info_url),true);
-        if(empty($userinfo['openid'])){
-            \think\Log::record(json_encode($userinfo),'wechat_get_userinfo');
+        $userinfo = json_decode(\fast\Http::get($get_user_info_url), true);
+        if (empty($userinfo['openid'])) {
+            \think\Log::record(json_encode($userinfo), 'wechat_get_userinfo');
         }
         
         return $userinfo;
@@ -43,7 +45,8 @@ class Wechat {
     /**
      * 发送模板消息
      */
-    public static function sendTemplate($params):? bool{
+    public static function sendTemplate($params):? bool
+    {
 
         //异步发送消息
         // $res_data = \fast\Http::sendAsyncRequest($uri,json_encode($params),'POST');
@@ -54,7 +57,7 @@ class Wechat {
         $res_data = \fast\Http::post($uri, json_encode($params));
         $res_data = json_decode($res_data, true);
         if ($res_data['errcode'] != 0) {
-            \think\Log::record(json_encode($res_data),'wechat_template');
+            \think\Log::record(json_encode($res_data), 'wechat_template');
             return false;
         }
         return true;
@@ -62,12 +65,12 @@ class Wechat {
 
     /**
      * 发送模板消息 test
-     * 
+     *
      */
     public static function sendMsg($openid)
     {
-        if($openid == ''){
-            \think\Log::record('无openid','wechat_template');
+        if ($openid == '') {
+            \think\Log::record('无openid', 'wechat_template');
             return false;
         }
         $params = [
@@ -99,12 +102,12 @@ class Wechat {
 
     /**
      * 电工接单成功 给下单用户发送消息
-     * 
+     *
      */
-    public static function sendMsgReceipt($openid = '',$worker_name = '',$phone = '')
+    public static function sendMsgReceipt($openid = '', $worker_name = '', $phone = '')
     {
-        if($openid == ''){
-            \think\Log::record('无openid','wechat_template');
+        if ($openid == '') {
+            \think\Log::record('无openid', 'wechat_template');
             return false;
         }
         $params = [
@@ -137,12 +140,12 @@ class Wechat {
 
     /**
      * 后台分配电工，给电工发送消息
-     * 
+     *
      */
-    public static function sendMsgDistribution($openid = '',$user_name = '',$time = '')
+    public static function sendMsgDistribution($openid = '', $user_name = '', $time = '')
     {
-        if($openid == ''){
-            \think\Log::record('无openid','wechat_template');
+        if ($openid == '') {
+            \think\Log::record('无openid', 'wechat_template');
             return false;
         }
         $params = [
@@ -174,15 +177,15 @@ class Wechat {
 
     /**
      * 认证结果提醒模板消息
-     * 
+     *
      */
-    public static function sendReason($openid = '', $nickname = '',$state = 0 ,$reason = '')
+    public static function sendReason($openid = '', $nickname = '', $state = 0, $reason = '')
     {
-        if(!in_array($state, ['2','3'])){
+        if (!in_array($state, ['2','3'])) {
             return true;
         }
-        if($openid == ''){
-            \think\Log::record('无openid','wechat_template');
+        if ($openid == '') {
+            \think\Log::record('无openid', 'wechat_template');
             return false;
         }
         $params = [
@@ -204,7 +207,7 @@ class Wechat {
                     'color' => '#173177'
                 ],
                 'keyword3' => [
-                    'value' => date('Y-m-d H:i',time()),
+                    'value' => date('Y-m-d H:i', time()),
                     'color' => '#173177'
                 ],
                 'remark' => [
@@ -218,11 +221,12 @@ class Wechat {
 
     /**
      * 获取微信jssdk权限验证配置
-     * 
+     *
      * @param string $url
      * @return array
      */
-    public static function getJssdkConfig($url = self::APP_URL) :?array{
+    public static function getJssdkConfig($url = self::APP_URL) :?array
+    {
         $data = [
             'appId' => config('site.wechat_app_id'),
             'nonceStr' => uniqid(),
@@ -237,12 +241,13 @@ class Wechat {
 
     /**
      * 获取jsapi_ticket参数
-     * 
+     *
      * @return string
      */
-    public static function getJsapiTicket() :?string{
+    public static function getJsapiTicket() :?string
+    {
         $jsapi_ticket = \think\Cache::get('jsapi_ticket');
-        if(!$jsapi_ticket){
+        if (!$jsapi_ticket) {
             $access_token = self::getAccessToken();
             $url = self::GET_Ticket_URL . '?type=jsapi&access_token=' . $access_token;
             $data = json_decode(\fast\Http::get($url), true);

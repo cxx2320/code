@@ -1,11 +1,12 @@
 <?php
 
-class RedisClient {
+class RedisClient
+{
     //创建静态私有的变量保存该类对象
-    static private $instance;
-    static private $redis;
+    private static $instance;
+    private static $redis;
 
-     //防止直接创建对象
+    //防止直接创建对象
     private function __construct()
     {
         $redis = new \Redis();
@@ -17,7 +18,7 @@ class RedisClient {
     /**
      * 获取redis单例
      */
-    static public function getInstance()
+    public static function getInstance()
     {
         if (!self::$instance instanceof self) {
             self::$instance = new self();
@@ -28,11 +29,13 @@ class RedisClient {
     
     public function __call($name, $params)
     {
-        if(empty($name)){
+        if (empty($name)) {
             return false;
         }
         return self::$redis->$name(...$params);
     }
     //防止克隆对象
-    private function __clone(){}
+    private function __clone()
+    {
+    }
 }

@@ -14,7 +14,7 @@ for ($n = 1; $n <= 3; $n++) {
 //     $status = Process::wait(true);
 //     echo "Recycled #{$status['pid']}, code={$status['code']}, signal={$status['signal']}" . PHP_EOL;
 // }
-while($status = Process::wait(true)){
+while ($status = Process::wait(true)) {
     echo "Recycled #{$status['pid']}, code={$status['code']}, signal={$status['signal']}" . PHP_EOL;
 }
 echo 'Parent #' . getmypid() . ' exit' . PHP_EOL;

@@ -1,12 +1,13 @@
 <?php
 
-class Wx {
+class Wx
+{
 
     /**
      * 微信授权
-     * snsapi_userinfo  
+     * snsapi_userinfo
      * snsapi_base
-     * 
+     *
      */
     const AUTHORIZE = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=1#wechat_redirect';
 
@@ -43,11 +44,12 @@ class Wx {
     /**
      * 获取access_token
      */
-    public static function getAccessToken(){
+    public static function getAccessToken()
+    {
         $appid = config('site.wechat_app_id');
         $secret = config('site.wechat_app_secret');
         $access_token = \think\Cache::get('access_token');
-        if(!$access_token){
+        if (!$access_token) {
             $url = sprintf(self::GET_ACCESS_TOKEN, $appid, $secret);
             $token = json_decode(\fast\Http::get($url), true);
             $access_token = $token['access_token'];
@@ -59,7 +61,8 @@ class Wx {
     /**
      * 获取用户信息
      */
-    public static function getUserInfo(string $code = ''){
+    public static function getUserInfo(string $code = '')
+    {
         $appid = config('site.wechat_app_id');
         $secret = config('site.wechat_app_secret');
 
@@ -79,9 +82,9 @@ class Wx {
             'lang' => 'zh_CN',
         ]);
         $get_user_info_url = self::GET_USERINFO_URL . $query;
-        $userinfo = json_decode(\fast\Http::get($get_user_info_url),true);
-        if(empty($userinfo['openid'])){
-            \think\Log::record(json_encode($userinfo),'wechat_log');
+        $userinfo = json_decode(\fast\Http::get($get_user_info_url), true);
+        if (empty($userinfo['openid'])) {
+            \think\Log::record(json_encode($userinfo), 'wechat_log');
         }
         
         return $userinfo;
@@ -89,11 +92,12 @@ class Wx {
 
     /**
      * 获取微信jssdk权限验证配置
-     * 
+     *
      * @param string $url
      * @return array
      */
-    public static function getJssdkConfig($url = self::APP_URL){
+    public static function getJssdkConfig($url = self::APP_URL)
+    {
         $data = [
             'appId' => config('site.wechat_app_id'),
             'nonceStr' => uniqid(),
@@ -113,12 +117,13 @@ class Wx {
 
     /**
      * 获取jsapi_ticket参数
-     * 
+     *
      * @return string
      */
-    public static function getJsapiTicket(){
+    public static function getJsapiTicket()
+    {
         $jsapi_ticket = \think\Cache::get('jsapi_ticket');
-        if(!$jsapi_ticket){
+        if (!$jsapi_ticket) {
             $access_token = self::getAccessToken();
             $query = http_build_query([
                 'type' => 'jsapi',
@@ -167,12 +172,11 @@ class Wx {
             'access_token' => self::getAccessToken()
         ]);
         $uri = self::TEMPLATE_SEND . $query;
-        $res = json_decode(\fast\Http::post($uri, json_encode($params)),true);
+        $res = json_decode(\fast\Http::post($uri, json_encode($params)), true);
         if ($res['errcode'] != 0) {
-            \think\Log::record(json_encode($res),'wechat_log');
+            \think\Log::record(json_encode($res), 'wechat_log');
             return false;
         }
         return true;
     }
-
 }

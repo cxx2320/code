@@ -2,7 +2,6 @@
 
 class OrderPayEvent implements \SplSubject
 {
-
     private $observers;
     public $order;
     public function __construct(Order $order)
@@ -58,6 +57,3 @@ $event = new OrderPayEvent($order);
 //$event->attach(new UpdateOrderStatus());
 //$event->attach(new SmsNotify());
 $event->notify();
-
-
-

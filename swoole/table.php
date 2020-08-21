@@ -2,7 +2,6 @@
 
 use Swoole\Table;
 
-
 $table_config = [
     'u2fd' => [
         'size' => 10240,

@@ -1,11 +1,12 @@
 <?php
 
-interface Milldeware {
+interface Milldeware
+{
     public static function handle(Closure $next);
 }
 
-class VerfiyCsrfToekn implements Milldeware {
-
+class VerfiyCsrfToekn implements Milldeware
+{
     public static function handle(Closure $next)
     {
         echo '验证csrf Token <br>';
@@ -13,8 +14,8 @@ class VerfiyCsrfToekn implements Milldeware {
     }
 }
 
-class VerfiyAuth implements Milldeware {
-
+class VerfiyAuth implements Milldeware
+{
     public static function handle(Closure $next)
     {
         echo '验证是否登录 <br>';
@@ -22,7 +23,8 @@ class VerfiyAuth implements Milldeware {
     }
 }
 
-class SetCookie implements Milldeware {
+class SetCookie implements Milldeware
+{
     public static function handle(Closure $next)
     {
         $next();
@@ -30,7 +32,7 @@ class SetCookie implements Milldeware {
     }
 }
 
-$handle = function() {
+$handle = function () {
     echo '当前要执行的程序!';
 };
 
@@ -40,10 +42,10 @@ $pipe_arr = [
     'SetCookie',
 ];
 
-$callback = array_reduce($pipe_arr,function($stack,$pipe) {
-    return function() use($stack,$pipe){
+$callback = array_reduce($pipe_arr, function ($stack, $pipe) {
+    return function () use ($stack,$pipe) {
         return $pipe::handle($stack);
     };
-},$handle);
+}, $handle);
 var_dump($callback);
 call_user_func($callback);

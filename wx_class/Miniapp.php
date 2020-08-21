@@ -64,7 +64,7 @@ class Miniapp
      */
     public static function getUnlimited($data = [])
     {
-        if(empty($data)){
+        if (empty($data)) {
             return false;
         }
         $token = self::getAccessToken();
@@ -78,7 +78,7 @@ class Miniapp
      */
     public static function getUserInfo($code = '', $encryptedData = '', $iv = '')
     {
-        if(empty($code)){
+        if (empty($code)) {
             throw new \Exception('参数错误');
         }
         $jscode2session = self::getSessionKey($code);
@@ -101,7 +101,7 @@ class Miniapp
      */
     public static function getUnlimited($data = [])
     {
-        if(empty($data)){
+        if (empty($data)) {
             return false;
         }
         $token = self::getAccessToken();
