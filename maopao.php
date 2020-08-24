@@ -44,9 +44,9 @@ $list2 = [6, 6, 5, 3, 2, 1, 0];
 $list1 = [6, 6, 5, 3, 2, 1, 0];
 
 //最大循环次数 7
-for ($i = 1; $i < count($list); ++$i) {
+for ($i = 1; $i < count($list); $i++) {
     // 最大循环次数 6
-    for ($j = 0; $j < count($list) - $i; ++$j) {
+    for ($j = 0; $j < count($list) - $i; $j++) {
         // $j = 6;
         if ($list[$j] < $list[$j + 1]) {
             [$list[$j], $list[$j + 1]]  = [$list[$j + 1], $list[$j]];

@@ -37,6 +37,7 @@ $rules = array(
     'combine_consecutive_unsets'                 => true, // 当多个 unset 使用的时候，合并处理
     'concat_space'                               => ['spacing' => 'one'], // .拼接必须有空格分割
     'array_indentation'                          => true, // 数组的每个元素必须缩进一次
+    'increment_style' => ['style' => 'post'],
     'no_superfluous_phpdoc_tags'                 => false, // 移出没有用的注释
     'blank_line_before_statement'                => [
         'statements' => [
@@ -47,23 +48,23 @@ $rules = array(
             'throw',
             'try'
         ]
-    ],// 空行换行必须在任何已配置的语句之前
+    ], // 空行换行必须在任何已配置的语句之前
     'binary_operator_spaces'                     => [
         'default' => 'align_single_space'
     ], //等号对齐、数字箭头符号对齐
     'align_multiline_comment'                    => [
         'comment_type' => 'phpdocs_only'
     ],
-    'lowercase_cast'                             => false,// 类型强制小写
-    'lowercase_constants'                        => true,// 常量为小写
-    'lowercase_static_reference'                 => true,// 静态调用为小写
+    'lowercase_cast'                             => false, // 类型强制小写
+    'lowercase_constants'                        => true, // 常量为小写
+    'lowercase_static_reference'                 => true, // 静态调用为小写
     'no_blank_lines_after_class_opening'         => true,
-    'phpdoc_separation'                          => false,// 不同注释部分按照单空行隔开
+    'phpdoc_separation'                          => false, // 不同注释部分按照单空行隔开
     'phpdoc_single_line_var_spacing'             => true,
     'phpdoc_indent'                              => true,
-    'phpdoc_align'=>[
-        'align'=>'vertical',
-        'tags'=>[
+    'phpdoc_align' => [
+        'align' => 'vertical',
+        'tags' => [
             'param', 'throws', 'type', 'var', 'property'
         ]
     ]

@@ -13,7 +13,7 @@ $chan = [];
 // 协程1
 go(function () use ($chan) {
     $result = [];
-    for ($i = 0; $i < 2; ++$i) {
+    for ($i = 0; $i < 2; $i++) {
         $result += $chan[$i];
     }
     var_dump($result);

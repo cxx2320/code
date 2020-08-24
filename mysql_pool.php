@@ -83,9 +83,9 @@ class MysqlPool
      */
     public function init()
     {
-        for ($i = 0; $i < $this->min; ++$i) {
+        for ($i = 0; $i < $this->min; $i++) {
             $obj = $this->createConnObject();
-            ++$this->count;
+            $this->count++;
             $this->connections->push($obj);
         }
 
@@ -101,7 +101,7 @@ class MysqlPool
     {
         if ($this->connections->isEmpty()) {
             if ($this->count < $this->max) {
-                ++$this->count;
+                $this->count++;
                 $obj = $this->createConnObject();
             } else {
                 $obj = $this->connections->pop($timeout);
@@ -148,7 +148,7 @@ class MysqlPool
                 // 当前连接数大于最小的连接数，并且回收掉空闲的连接
                 if ($this->count > $this->min && ($nowTime - $lastUsedTime > $this->freeTime)) {
                     $connObj['conn']->close();
-                    --$this->count;
+                    $this->count--;
                 } else {
                     $this->connections->push($connObj);
                 }
