@@ -20,7 +20,7 @@ $getXCB = function () {
 
 $getX = $getXCB->bindTo(new A(), 'A'); // 中间层闭包
 
-// // PHP 7+
+// PHP 7+ 可以提高20%到50%性能
 // $getX = function() {
 //     return $this->x;
 // };
