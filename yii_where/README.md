@@ -41,7 +41,7 @@ Yii框架中where设计非常巧妙，这里介绍了两种格式的使用。它
 ```sql
 WHERE (`status` = :qp1) AND (`id` IN (:qp2, :qp3, :qp4))
 ```
-`$params`将会被更改为
+`$params`将会被更改
 ```php
 [
     ':qp1' => '1',
@@ -61,7 +61,7 @@ $query->where([
     'id' => [4, 8, 15],
 ]);
 ```
-这种使用简单，只能实现一些简单的where语句,`return $this->buildHashCondition($condition, $params);`这一行代码就是实现哈希where的实现。
+这种使用简单，只能实现一些简单的where语句,`buildHashCondition`方法就是实现哈希的实现。
 ```php
     /**
      * Creates a condition based on column-value pairs.

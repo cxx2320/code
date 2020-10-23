@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 简单的操作符实现(大体思路就是一个buildCondition入口，让后解析不同的操作符)
+ * 简单的操作符实现(大体思路就是一个buildCondition入口，然后解析不同的操作符)
  */
 
 define('PARAM_PREFIX', ':qp');
