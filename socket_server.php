@@ -1,12 +1,5 @@
 <?php
 
-/*
- *
- * (c) cxx <cxx2320@foxmail>
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- *
- */
 
 $host = '0.0.0.0';
 $port = 9999;
@@ -38,7 +31,7 @@ $event      = new \Event($event_base, $fd, \Event::READ | \Event::PERSIST, funct
             $event_base,
             $conn,
             \Event::READ | \Event::PERSIST,
-            function ($conn) use ($event_arr) {
+            function ($conn) {
                 global $conn_arr;
                 $buffer = socket_read($conn, 65535);
                 foreach ($conn_arr as $conn_key => $conn_item) {

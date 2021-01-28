@@ -1,8 +1,8 @@
 <?php
 
 /**
- * 以复制粘贴的方式理解trait
- * @link https://www.php.net/trait#120038
+ * 以复制粘贴的方式理解trait.
+ * @see https://www.php.net/trait#120038
  */
 trait Say
 {
@@ -12,7 +12,7 @@ trait Say
     }
 
     /**
-     * @link https://www.php.net/trait#113554
+     * @see https://www.php.net/trait#113554
      *
      * @return void
      */
@@ -26,5 +26,5 @@ class Foo
 {
     use Say;
 }
-var_dump((new Foo)->getTrait());
-var_dump((new Foo)->getClass());
+var_dump((new Foo())->getTrait());
+var_dump((new Foo())->getClass());

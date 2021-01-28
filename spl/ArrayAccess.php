@@ -1,12 +1,5 @@
 <?php
 
-/*
- *
- * (c) cxx <cxx2320@foxmail>
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- *
- */
 
 /**
  * 使用ArrayAccess可以使把对象以数组的方式访问.

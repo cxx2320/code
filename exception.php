@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 异常会从上至下的匹配第一个符合的catch块
+ * 异常会从上至下的匹配第一个符合的catch块.
  */
 class FooException extends Exception
 {

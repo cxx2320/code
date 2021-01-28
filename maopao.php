@@ -1,12 +1,5 @@
 <?php
 
-/*
- *
- * (c) cxx <cxx2320@foxmail>
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- *
- */
 
 $list = [1, 3, 2, 6, 0, 6, 5];
 

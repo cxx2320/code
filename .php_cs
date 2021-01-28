@@ -3,10 +3,6 @@
 // 将会在每个php文件头部加上此注释
 $header = <<<EOF
 
-(c) cxx <cxx2320@foxmail>
-This source file is subject to the MIT license that is bundled
-with this source code in the file LICENSE.
-
 EOF;
 
 $finder = PhpCsFixer\Finder::create()

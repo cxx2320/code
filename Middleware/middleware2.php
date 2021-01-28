@@ -1,10 +1,4 @@
 <?php
-/*
- * @Author: cxx<cxx2320@foxmail.com>
- * @Date: 2020-08-25 18:15:13
- * @LastEditors: cxx
- * @LastEditTime: 2020-08-25 18:15:34
- */
 
 interface Milldeware
 {
@@ -18,6 +12,7 @@ class mid1 implements Milldeware
         var_dump(1);
         $response = $handler->handle($request);
         var_dump(6);
+
         return $response;
     }
 }
@@ -29,6 +24,7 @@ class mid2 implements Milldeware
         var_dump(2);
         $response = $handler->handle($request);
         var_dump(5);
+
         return $response;
     }
 }
@@ -40,18 +36,20 @@ class mid3 implements Milldeware
         var_dump(3);
         $response = $handler->handle($request);
         var_dump(4);
+
         return $response;
     }
 }
 
 /**
- * 核心中间件
+ * 核心中间件.
  */
 class core
 {
     public $name = 'cxx';
+
     /**
-     * 在核心中间件中需要把请求调度到具体的控制器方法中
+     * 在核心中间件中需要把请求调度到具体的控制器方法中.
      */
     public function process($request, $handler)
     {
@@ -60,7 +58,7 @@ class core
 }
 
 /**
- * 中间件调度器
+ * 中间件调度器.
  */
 class dis
 {
@@ -78,7 +76,7 @@ class dis
         if (!isset($this->middlewares[$this->offset])) {
             $handler = $request;
         } else {
-            $handler = new $this->middlewares[$this->offset];
+            $handler = new $this->middlewares[$this->offset]();
         }
 
         return $handler->process($request, $this->next());
@@ -86,7 +84,8 @@ class dis
 
     protected function next(): self
     {
-        ++$this->offset;
+        $this->offset++;
+
         return $this;
     }
 }

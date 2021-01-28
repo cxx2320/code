@@ -1,12 +1,5 @@
 <?php
 
-/*
- *
- * (c) cxx <cxx2320@foxmail>
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- *
- */
 
 namespace fast;
 
@@ -54,7 +47,7 @@ class Wechat
     /**
      * 发送模板消息.
      */
-    public static function sendTemplate($params): ? bool
+    public static function sendTemplate($params): ?bool
     {
         //异步发送消息
         // $res_data = \fast\Http::sendAsyncRequest($uri,json_encode($params),'POST');

@@ -1,12 +1,5 @@
 <?php
 
-/*
- *
- * (c) cxx <cxx2320@foxmail>
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- *
- */
 
 class OrderPayEvent implements \SplSubject
 {
@@ -19,12 +12,12 @@ class OrderPayEvent implements \SplSubject
         $this->observers = new \SplObjectStorage();
     }
 
-    public function attach(\SplObserver $observer) //加入观察者
+    public function attach(SplObserver $observer) //加入观察者
     {
         $this->observers->attach($observer);
     }
 
-    public function detach(\SplObserver $observer)
+    public function detach(SplObserver $observer)
     {
         $this->observers->detach($observer);
     }

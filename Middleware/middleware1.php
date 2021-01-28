@@ -1,12 +1,5 @@
 <?php
 
-/*
- *
- * (c) cxx <cxx2320@foxmail>
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- *
- */
 
 interface Milldeware
 {
@@ -51,7 +44,7 @@ $pipe_arr = [
 ];
 
 $callback = array_reduce($pipe_arr, function ($stack, $pipe) {
-    return function () use ($stack,$pipe) {
+    return function () use ($stack, $pipe) {
         return $pipe::handle($stack);
     };
 }, $handle);
