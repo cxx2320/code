@@ -72,4 +72,4 @@ $data = QueryList::html($html)->rules($rules)->query()->getData(function ($item)
 
     return $item;
 });
-var_dump($data->all()); 
+var_dump($data->all());
