@@ -13,11 +13,11 @@ $mpdf = new \Mpdf\Mpdf([
     'h2bookmarks' => ['H3' => 0],
 ]);
 
-$mpdf->SetTitle('政策匹配报告');
-$mpdf->SetAuthor('政策宝');
-$mpdf->SetCreator('政策宝');
-$mpdf->SetSubject('政策匹配报告');
-$mpdf->SetKeywords('政策宝,政策匹配,报告');
+$mpdf->SetTitle('Title');
+$mpdf->SetAuthor('Author');
+$mpdf->SetCreator('Creator');
+$mpdf->SetSubject('Subject');
+$mpdf->SetKeywords('Keywords,Keywords,Keywords');
 
 // 导入的模板自带封面
 $pagecount = $mpdf->setSourceFile('./template.pdf');
@@ -28,7 +28,7 @@ $mpdf->useTemplate($tplId);
 $mpdf->AddPage('','','','','off');
 
 // 设置页眉和页脚
-$mpdf->SetHeader('政策宝 (www.policybao.com)||');
+$mpdf->SetHeader('Header (www.Header.com)||');
 $mpdf->SetFooter('|{PAGENO} / {nb}|');
 
 // 目录
@@ -38,7 +38,7 @@ $mpdf->TOCpagebreakByArray([
 ]);
 
 // 水印
-$mpdf->SetWatermarkText('河南正文网络科技有限公司', 0.1);
+$mpdf->SetWatermarkText('水印水印水印水印水印水印水印', 0.1);
 $mpdf->showWatermarkText = true;
 
 // 写入详细内容
@@ -84,7 +84,7 @@ for ($i = 0; $i < 10; $i++) {
     <tr>
     <th>解读分析</th>
     <td>1、失业保险稳岗补贴与失业保险应急稳岗返还补贴不能同时享受。
-    2、联系电话：68064000
+    2、联系电话：130xxxxxxx
     </td>
     </tr>
 
