@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    // $.post("http://172.26.185.79:9999/index.php", {
+    //     responseType: 'blob',
+    // }, function (result) {
+    //     let blob = new Blob([result]);
+    //     var a = document.createElement('a');//在dom树上创建一个a标签
+    //     var url = window.URL.createObjectURL(blob);//我的理解是生成一个相对于浏览器的虚拟url，用于指向传入的blob对象，让浏览器可以通过这个url找到这个blob对象
+    //     a.href = url;//将url赋值给a标签的href属性
+    //     a.download = 'NPI_PROJECT.xlsx';//设置设置下载文件的名称
+    //     a.click();//主动触发a标签点击事件
+
+
+    // let blob = new Blob([result], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    // let url = window.URL.createObjectURL(blob);
+    // const link = document.createElement("a"); // 创建a标签
+    // link.href = url;
+    // let date = new Date();
+    // link.download = "fileDown"; // 重命名文件
+    // link.click();
+    // URL.revokeObjectURL(url); // 释放内存
+
+    // });
+
+
+
+    // $.ajax({
+    //     url: 'http://172.26.185.79:9999/index.php',
+    //     type: 'POST',
+    //     responseType: 'blob',
+    //     headers: {
+    //         "Content-Type": 'application/x-www-form-urlencoded; charset=UTF-8'
+    //     },
+    //     success: function (res) {
+    //         console.log(res)
+    //         let blob = new Blob([res], { type: "application/x-www-form-urlencoded; charset=UTF-8" });
+    //         let url = window.URL.createObjectURL(blob);
+    //         const link = document.createElement("a"); // 创建a标签
+    //         link.href = url;
+    //         link.download = "fileDown"; // 重命名文件
+    //         link.click();
+    //         URL.revokeObjectURL(url); // 释放内存
+    //     },
+    //     error: function (e) {
+    //     }
+    // });
+
+    var fileName = 'test';
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://172.26.185.79:9999/index.php', true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.responseType = 'blob';
+    request.onload = function (e) {
+        if (this.status === 200) {
+            var blob = this.response;
+            if (window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveBlob(blob, fileName);
+            } else {
+                var downloadLink = window.document.createElement('a');
+                var contentTypeHeader = request.getResponseHeader("Content-Type");
+                downloadLink.href = window.URL.createObjectURL(new Blob([blob], { type: contentTypeHeader }));
+                downloadLink.download = fileName;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
+        }
+    };
+    request.send();
+
+</script>
+
+</html>
